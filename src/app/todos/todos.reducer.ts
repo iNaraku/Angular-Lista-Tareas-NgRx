@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { crear, toggle, editar, borrar, toggleAll } from './todo.actions';
+import { crear, toggle, editar, borrar, toggleAll, limpiarTodos } from './todo.actions';
 import { Todo } from './Models/todo.model';
 
 export const estadoInicial: Todo[] = [
@@ -10,6 +10,12 @@ export const estadoInicial: Todo[] = [
 
 // tslint:disable-next-line: variable-name
 const _todoReducer = createReducer(estadoInicial,
+
+  /**
+   * Regresa un nuevo arreglo en el cual se quitan las tareas con estado completado en falso
+   */
+  on(limpiarTodos, state => state.filter(todo => !todo.completado)),
+
   /**
    * Regresa un nuevo arreglo en el cual agrega el nuevo elemento
    */
